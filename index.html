@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>for my love 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(180deg,#fff5f9,#ffe6f0,#ffd9ea,#fff0f6);
+  position:relative;
+}
+
+.blur1,.blur2{
+  position:absolute;
+  width:400px;
+  height:400px;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:.5;
+}
+
+.blur1{background:#ffc9df;top:-150px;left:-100px;}
+.blur2{background:#ffd6e8;bottom:-120px;right:-100px;}
+
+.sparkle{
+  position:fixed;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:white;
+  box-shadow:0 0 10px white;
+  animation:sparkle 3s infinite ease-in-out;
+}
+
+@keyframes sparkle{
+  0%,100%{opacity:.2;transform:scale(.5);}
+  50%{opacity:1;transform:scale(1.7);}
+}
+
+.main{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:40px 20px;
+}
+
+.wrapper{
+  width:360px;
+  text-align:center;
+}
+
+.envelope-box{
+  cursor:pointer;
+  transition:1s;
+}
+
+.envelope{
+  width:240px;
+  height:155px;
+  background:#ffbdd6;
+  margin:auto;
+  border-radius:0 0 20px 20px;
+  position:relative;
+  box-shadow:0 15px 40px rgba(255,160,190,.35);
+}
+
+.flap{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#ffcde2;
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  transform-origin:top;
+  transition:1s;
+}
+
+.heart{
+  position:absolute;
+  top:55%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:28px;
+}
+
+.tap{
+  margin-top:15px;
+  font-size:13px;
+}
+
+.open .flap{ transform:rotateX(180deg); }
+.open{ transform:translateY(-80px); opacity:0; }
+
+.card{
+  margin-top:20px;
+  padding:30px;
+  border-radius:25px;
+  background:rgba(255,255,255,.3);
+  backdrop-filter:blur(15px);
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+
+.card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.title{
+  font-family:'Great Vibes',cursive;
+  font-size:40px;
+}
+
+.message{
+  margin-top:15px;
+  font-size:14px;
+  line-height:2;
+}
+
+.signature{
+  margin-top:20px;
+  font-style:italic;
+}
+
+.controls{
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:10px 15px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background:rgba(255,255,255,.4);
+}
+
+.popup{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.4);
+  padding:12px 20px;
+  border-radius:20px;
+  opacity:0;
+  transition:.5s;
+}
+
+.popup.show{ opacity:1; }
+
+/* FLOWER FLOAT */
+
+.flower{
+  position:fixed;
+  pointer-events:none;
+  z-index:999;
+  animation:float 7s linear forwards;
+}
+
+@keyframes float{
+
+  0%{
+    transform:
+      translateY(0)
+      rotate(0deg)
+      scale(.3);
+    opacity:0;
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  100%{
+    transform:
+      translateY(-900px)
+      rotate(360deg)
+      scale(1.2);
+    opacity:0;
+  }
+}
+
+/* FLOWER BURST */
+
+.burstFlower{
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  animation:burstAnim 2s ease-out forwards;
+}
+
+@keyframes burstAnim{
+
+  0%{
+    transform:
+      translate(0,0)
+      scale(.2)
+      rotate(0deg);
+    opacity:0;
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  100%{
+    transform:
+      translate(var(--x), var(--y))
+      scale(1.5)
+      rotate(360deg);
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="blur1"></div>
+<div class="blur2"></div>
+
+<div class="main">
+<div class="wrapper">
+
+<div class="envelope-box" id="envelopeBox" onclick="openLetter()">
+  <div class="envelope">
+    <div class="flap"></div>
+    <div class="heart">🤍</div>
+  </div>
+  <div class="tap">tap to open ✨</div>
+</div>
+
+<div class="card" id="card">
+  <div class="title">i’m sorry, my love 🤍</div>
+
+  <div class="message">
+    aku minta maaf yaa kalau selama ini sikap dan kata-kata aku bikin kamu kecewa atau sakit hati.<br><br>
+    aku sadar aku belum jadi yang terbaik.<br><br>
+    tapi aku bener-bener ga pernah ada niat buat nyakitin kamu.<br><br>
+    makasih udah sabar sejauh ini 🤍
+  </div>
+
+  <div class="signature">from your boyfieee ♡</div>
+
+  <div class="controls">
+    <button class="btn" onclick="downloadPNG()">download png 📸</button>
+    <button class="btn" onclick="toggleMusic()">play / pause 🎵</button>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="popup" id="popup">thank you for staying 💗</div>
+
+<audio id="bgMusic" loop>
+  <source src="ssstik.io_1780017146313.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let opened = false;
+
+/* sparkles */
+for(let i=0;i<40;i++){
+
+  const s=document.createElement('div');
+
+  s.classList.add('sparkle');
+
+  s.style.left=Math.random()*100+'vw';
+  s.style.top=Math.random()*100+'vh';
+
+  s.style.animationDuration=
+    (2+Math.random()*3)+'s';
+
+  document.body.appendChild(s);
+}
+
+function openLetter(){
+
+  if(opened) return;
+
+  opened = true;
+
+  document
+    .getElementById('envelopeBox')
+    .classList.add('open');
+
+  flowerBurst();
+
+  setTimeout(()=>{
+
+    document
+      .getElementById('card')
+      .classList.add('show');
+
+  },700);
+
+  setTimeout(()=>{
+
+    document
+      .getElementById('popup')
+      .classList.add('show');
+
+  },1500);
+
+  createFlowers();
+
+  const music =
+    document.getElementById('bgMusic');
+
+  music.volume = 1;
+
+  music.play().catch(()=>{});
+}
+
+/* FLOWER BURST */
+
+function flowerBurst(){
+
+  for(let i=0;i<45;i++){
+
+    const flower =
+      document.createElement('div');
+
+    flower.classList.add('burstFlower');
+
+    const arr=['🌸','💮','🩷','🌷'];
+
+    flower.innerHTML =
+      arr[Math.floor(Math.random()*arr.length)];
+
+    flower.style.left='50%';
+    flower.style.top='50%';
+
+    flower.style.fontSize =
+      (16+Math.random()*30)+'px';
+
+    const x =
+      (Math.random()-0.5)*900+'px';
+
+    const y =
+      (Math.random()-0.5)*900+'px';
+
+    flower.style.setProperty('--x',x);
+    flower.style.setProperty('--y',y);
+
+    document.body.appendChild(flower);
+
+    setTimeout(()=>{
+      flower.remove();
+    },2000);
+  }
+}
+
+/* FLOATING FLOWERS */
+
+function createFlowers(){
+
+  setInterval(()=>{
+
+    const flower =
+      document.createElement('div');
+
+    flower.classList.add('flower');
+
+    const arr=['🌸','💮','🩷','🌷'];
+
+    flower.innerHTML =
+      arr[Math.floor(Math.random()*arr.length)];
+
+    flower.style.left =
+      Math.random()*100+'vw';
+
+    flower.style.top='100vh';
+
+    flower.style.fontSize =
+      (18+Math.random()*28)+'px';
+
+    flower.style.animationDuration =
+      (5+Math.random()*4)+'s';
+
+    document.body.appendChild(flower);
+
+    setTimeout(()=>{
+      flower.remove();
+    },9000);
+
+  },300);
+}
+
+function toggleMusic(){
+
+  const music=
+    document.getElementById('bgMusic');
+
+  music.paused
+    ? music.play()
+    : music.pause();
+}
+
+function downloadPNG(){
+
+  const btns =
+    document.querySelector('.controls');
+
+  const oldDisplay =
+    btns.style.display;
+
+  btns.style.display = 'none';
+
+  document.body.style.filter =
+    "contrast(1.05) saturate(1.1)";
+
+  html2canvas(document.body,{
+    scale:2,
+    useCORS:true,
+    backgroundColor:null,
+    scrollY:-window.scrollY,
+    windowWidth:document.body.scrollWidth,
+    windowHeight:document.body.scrollHeight
+  }).then(canvas=>{
+
+    const a=document.createElement('a');
+
+    a.download='for-my-love-aesthetic.png';
+
+    a.href=canvas.toDataURL('image/png');
+
+    a.click();
+
+    btns.style.display = oldDisplay;
+
+    document.body.style.filter="none";
+  });
+}
+
+</script>
+
+</body>
+</html>
